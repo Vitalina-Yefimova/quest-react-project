@@ -5,13 +5,8 @@ import svgr from 'vite-plugin-svgr'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(),
+  plugins: [
+    react(),
     tailwindcss(),
-    svgr({
-      svgrOptions: {
-        icon: true,
-        filenameCase: 'original',
-      },
-    }),
   ],
 })
