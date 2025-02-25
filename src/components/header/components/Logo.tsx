@@ -1,6 +1,6 @@
-import '../../index.css'
-import { LogoIcon } from '../icons'
-import { EscapeRoomIcon } from '../icons'
+import '../../../index.css'
+import { LogoIcon } from '../../icons'
+import { EscapeRoomIcon } from '../../icons'
 
 export default function Logo() {
   return (

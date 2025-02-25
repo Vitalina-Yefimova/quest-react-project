@@ -1,11 +1,11 @@
 import '../../index.css'
-import Logo from './Logo'
-import Navigation from './Navigation'
-import PhoneNumber from './PhoneNumber'
+import Logo from './components/Logo'
+import Navigation from './components/Navigation'
+import PhoneNumber from './components/PhoneNumber'
 
 export default function Header() {
   return (
-    <header className='flex items-center justify-between bg-custom-gradient h-[74px]'>
+    <header className='flex items-center justify-between h-[74px]'>
       <Logo />
       <Navigation />
       <PhoneNumber />

@@ -1,8 +1,8 @@
 const SkypeGreyIcon = (props) => (
   <svg
-    width="1em"
-    height="1em"
-    viewBox="0 0 19 20"
+    width="19px"
+    height="18px"
+    viewBox="0 0 19 23"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
