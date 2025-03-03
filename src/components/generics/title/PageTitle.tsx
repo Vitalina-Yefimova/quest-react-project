@@ -1,4 +1,4 @@
-import '../../index.css'
+import '../../../index.css'
 
 interface PageTitleProps {
   className: string;
@@ -7,7 +7,7 @@ interface PageTitleProps {
   titleClassName: string
 }
 
-export default function PageTitle({ overline, title, titleClassName = '', className = '' }: PageTitleProps) {
+export default function PageTitle({ overline, title, titleClassName = '', className = '' }: PageTitleProps): React.ReactElement {
   
   return (
     <div className={`${className}`}>

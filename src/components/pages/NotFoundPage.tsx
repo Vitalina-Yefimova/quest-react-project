@@ -1,9 +1,10 @@
 import '../../index.css'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Header from '../header/Header'
 import Footer from '../footer/Footer'
 
-export default function NotFoundPage() {
+export default function NotFoundPage(): React.ReactElement {
   
   const [seconds, setSeconds] = useState<number>(10)
   const navigate = useNavigate()
@@ -23,7 +24,9 @@ export default function NotFoundPage() {
     
 
   return (
-    <div className='relative text-center pt-5'>
+    <>
+    <Header />
+    <div className='relative text-center p-30 w-full'>
       <h1 className='text-4xl font-bold text-red-500 pb-5'>
         404 Not Found
       </h1>
@@ -34,6 +37,7 @@ export default function NotFoundPage() {
         You will be redirected to the homepage in {seconds} seconds...
       </p>
       < Footer />
-    </div>
+      </div>
+      </>
   );
 }

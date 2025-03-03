@@ -6,3 +6,7 @@ body {
   font-family: 'Raleway', sans-serif;
   background: linear-gradient(0deg, #141414 0%, #1F1D1D 100%);
 }
+
+.font-variant-numeric {
+  font-variant-numeric: lining-nums proportional-nums;
+}

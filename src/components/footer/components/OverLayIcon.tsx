@@ -1,8 +1,9 @@
+import React from 'react'
 import '../../../index.css'
 import { EllipseGreyIcon } from '../../icons'
 import { SkypeGreyIcon } from '../../icons'
 
-export default function OverLayIcon() {
+export default function OverLayIcon(): React.ReactElement {
   return (
     <div className='relative w-[28px] h-[28px]'>
       <EllipseGreyIcon />

@@ -48,3 +48,6 @@ export default tseslint.config({
   },
 })
 ```
+
+npx @svgr/cli src/assets/icons/vector-contacts-icon.svg --out-dir src/components/icons
+npm install --save google-map-react --legacy-peer-deps

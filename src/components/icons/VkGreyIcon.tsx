@@ -2,7 +2,6 @@ const VkGreyIcon = (props) => (
   <svg
     width="28px"
     height="28px"
-    viewBox="0 0 38 32"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
