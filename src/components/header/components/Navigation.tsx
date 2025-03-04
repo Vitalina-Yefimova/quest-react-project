@@ -11,9 +11,9 @@ export default function Navigation(): React.ReactElement {
   // NavItems[] указывает, что navItems — это массив объектов, соответствующих интерфейсу NavItems
   const navItems: NavItems[] = [
     { path: "/", label: "QUESTS" },
-    { path: "/not-found-page", label: "FOR BEGINNERS" },
-    { path: "/not-found-page", label: "TESTIMONIALS" },
-    { path: "/not-found-page", label: "SPECIAL OFFERS" },
+    { path: "/for-begginners", label: "FOR BEGINNERS" },
+    { path: "/testimonials", label: "TESTIMONIALS" },
+    { path: "/special-offers", label: "SPECIAL OFFERS" },
     { path: "/contacts", label: "CONTACTS" },
   ];
 
