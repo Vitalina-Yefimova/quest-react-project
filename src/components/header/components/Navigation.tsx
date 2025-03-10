@@ -1,5 +1,6 @@
 import "../../../index.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import CustomCursorWrapper from "../../generics/customCursor/CustomCursorWrapper";
 
 interface NavItems {
   // interface - это инструмент TS для описания структуры объекта
@@ -8,6 +9,7 @@ interface NavItems {
 }
 
 export default function Navigation(): React.ReactElement {
+  const location = useLocation();
   // NavItems[] указывает, что navItems — это массив объектов, соответствующих интерфейсу NavItems
   const navItems: NavItems[] = [
     { path: "/", label: "QUESTS" },
@@ -18,21 +20,27 @@ export default function Navigation(): React.ReactElement {
   ];
 
   return (
-    <nav>
+    <nav className="relative">
       <ul className="flex gap-[47px] pt-10">
         {navItems.map(({ path, label }) => (
-          <li key={path}>
-            <NavLink
-              to={path}
-              className={({ isActive }: { isActive: boolean }) =>
-                `text-sm font-semibold leading-normal not-italic tracking-[0.42px] ${
-                  isActive ? "text-[#F2890F]" : "text-[#F0F0F0]"
-                }`
-              }
-            >
-              {label}
-            </NavLink>
-          </li>
+          <CustomCursorWrapper>
+            <li key={path}>
+              <NavLink
+                to={path}
+                className={({ isActive }) => {
+                  const isQuestsActive =
+                    isActive ||
+                    (path === "/" && location.pathname.startsWith("/genre/"));
+
+                  return `text-sm font-semibold leading-normal not-italic tracking-[0.42px] cursor-none ${
+                    isQuestsActive ? "text-[#F2890F]" : "text-[#F0F0F0]"
+                  }`;
+                }}
+              >
+                {label}
+              </NavLink>
+            </li>
+          </CustomCursorWrapper>
         ))}
       </ul>
     </nav>

@@ -2,8 +2,8 @@ import "../../index.css";
 import Header from "../header/Header";
 import PageTitle from "../generics/title/PageTitle";
 import VectorContactsIcon from "../icons/VectorContactsIcon";
-import ContactInfo from "../main/ContactInfo";
-import GoogleMap from "../main/GoogleMap";
+import ContactInfo from "../content/ContactInfo";
+import GoogleMap from "../content/GoogleMap";
 import Footer from "../footer/Footer";
 import contactsBackground from "../../assets/images/contacts-background.png";
 
@@ -17,12 +17,11 @@ export default function Contacts(): React.ReactElement {
 
       <div className="relative z-10">
         {/* z-10 - гарантирует, что контент будет над фоном, а не размоется */}
-        <Header />
+        <Header className="backdrop-blur-lg" />
         <PageTitle
-          className="pt-16 pb-[29px] pl-[142px]"
+          className="pt-[138px] pb-[29px] pl-[142px]"
           overline="Quests in Calgary"
           title="Contacts"
-          titleClassName="text-6xl not-italic font-extrabold leading-[70.4px]"
         />
         <VectorContactsIcon className="ml-[136px] mr-[150px]" />
         <section className="flex gap-[157px] pr-[150px] pb-[121px]">

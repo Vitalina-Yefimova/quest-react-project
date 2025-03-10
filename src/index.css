@@ -5,6 +5,7 @@
 body {
   font-family: 'Raleway', sans-serif;
   background: linear-gradient(0deg, #141414 0%, #1F1D1D 100%);
+  position: relative;
 }
 
 .font-variant-numeric {

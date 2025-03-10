@@ -51,3 +51,5 @@ export default tseslint.config({
 
 npx @svgr/cli src/assets/icons/vector-contacts-icon.svg --out-dir src/components/icons
 npm install --save google-map-react --legacy-peer-deps
+
+1. сделать отдельный компонент курсор и передавать его куда надо
