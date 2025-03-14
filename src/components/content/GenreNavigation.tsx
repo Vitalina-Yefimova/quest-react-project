@@ -10,6 +10,7 @@ import AdventureIcon from "../icons/AdventureIcon";
 import SciFiIcon from "../icons/SciFiIcon";
 import { questsData } from "../../store/questsData";
 import CustomCursorWrapper from "../generics/customCursor/CustomCursorWrapper";
+import DividerVector from "../generics/divider/DividerVector";
 
 const genres: Genre[] = [
   { genreName: "Horror", icon: <HorrorIcon /> },
@@ -56,7 +57,7 @@ const GenreNavigation = () => {
               }}
             </NavLink>
           </CustomCursorWrapper>
-          <div className="bg-white/32 w-[1.5px] h-[40px] ml-10"></div>
+          <DividerVector className="bg-white/32 w-[1.5px] h-[40px] ml-10"></DividerVector>
         </li>
         {availableGenres.map(({ icon, genreName }, index) => (
           <li className="flex" key={genreName}>

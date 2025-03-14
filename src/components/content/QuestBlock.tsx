@@ -4,6 +4,7 @@ import { Quest } from "../../store/useQuestStore";
 import PersonIcon from "../icons/PersonIcon";
 import PuzzleIcon from "../icons/PuzzleIcon";
 import CustomCursorWrapper from "../generics/customCursor/CustomCursorWrapper";
+import DividerVector from "../generics/divider/DividerVector";
 
 interface QuestBlockProps {
   quest: Quest;
@@ -30,7 +31,7 @@ const QuestBlock: React.FC<QuestBlockProps> = ({ quest }) => {
                   {quest.players}
                 </p>
               </div>
-              <div className="bg-[#E5E5E5] w-[1px] h-[20px]"></div>
+              <DividerVector className="bg-white/50 w-[1px] h-[20px]"></DividerVector>
               <div className="flex gap-2">
                 <PuzzleIcon />
                 <p className="text-[#E5E5E5] text-[13px] leading-[144%] font-medium font-variant-numeric">

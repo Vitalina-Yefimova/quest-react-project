@@ -17,6 +17,8 @@ export default function App() {
           <Route path="/for-begginners" element={<NotFoundPage />} />
           <Route path="/testimonials" element={<NotFoundPage />} />
           <Route path="/special-offers" element={<NotFoundPage />} />
+          <Route path="/privacy-policy" element={<NotFoundPage />} />
+          <Route path="/user-agreement" element={<NotFoundPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>

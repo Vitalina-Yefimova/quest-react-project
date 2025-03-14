@@ -1,4 +1,4 @@
-export { default as AdventureIcon } from "./AdventureIcon"
+export { default as AdventureIcon } from "./AdventureIcon";
 export { default as AllQuestsIcon } from "./AllQuestsIcon";
 export { default as ClockIcon } from "./ClockIcon";
 export { default as CursorHandIcon } from "./CursorHandIcon";
@@ -17,5 +17,4 @@ export { default as VectorCloseIcon } from "./VectorCloseIcon";
 export { default as VectorDashedLineOrangeIcon } from "./VectorDashedLineOrangeIcon";
 export { default as VectorDashedLineWhiteIcon } from "./VectorDashedLineWhiteIcon";
 export { default as VectorLineIcon } from "./VectorLineIcon";
-export { default as VerticalDividerIcon } from "./VerticalDividerIcon";
 export { default as VkGreyIcon } from "./VkGreyIcon";

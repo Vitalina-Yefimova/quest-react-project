@@ -1,64 +1,27 @@
 import "../../index.css";
+import VectorCloseIcon from "../icons/VectorCloseIcon";
+import CustomCursorWrapper from "../generics/customCursor/CustomCursorWrapper";
+import BookingForm from "../content/BookingForm";
 
-export default function BookingPopup(): React.ReactElement {
+interface BookingPopupProps {
+  onClose: () => void;
+}
+
+export default function BookingPopup({ onClose }: BookingPopupProps) {
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-[#000000] bg-opacity-50 z-50">
-      <div className="relative w-[1000px] h-[600px] bg-[#1F1F1F] rounded-lg shadow-2xl m-auto mt-20">
-        <div className="flex justify-between items-center p-10">
-          <h2 className="text-[#FFF] text-xl font-semibold leading-[144%]">
-            Book a Room
-          </h2>
-          <button className="text-[#FFF] text-sm font-semibold leading-[144%] cursor-pointer">
-            X
-          </button>
-        </div>
-        <div className="flex justify-between p-10">
-          <div className="w-[50%]">
-            <h3 className="text-[#FFF] text-sm font-semibold leading-[144%]">
-              Select a Room
-            </h3>
-            <select className="w-full bg-[#2F2F2F] text-[#FFF] text-sm font-semibold leading-[144%] py-3 px-4 rounded-md mt-2">
-              <option value="room1">Room 1</option>
-              <option value="room2">Room 2</option>
-              <option value="room3">Room 3</option>
-            </select>
-          </div>
-          <div className="w-[50%]">
-            <h3 className="text-[#FFF] text-sm font-semibold leading-[144%]">
-              Select a Date
-            </h3>
-            <input
-              type="date"
-              className="w-full bg-[#2F2F2F] text-[#FFF] text-sm font-semibold leading-[144%] py-3 px-4 rounded-md mt-2"
-            />
-          </div>
-        </div>
-        <div className="flex justify-between p-10">
-          <div className="w-[50%]">
-            <h3 className="text-[#FFF] text-sm font-semibold leading-[144%]">
-              Select a Time
-            </h3>
-            <select className="w-full bg-[#2F2F2F] text-[#FFF] text-sm font-semibold leading-[144%] py-3 px-4 rounded-md mt-2">
-              <option value="time1">Time 1</option>
-              <option value="time2">Time 2</option>
-              <option value="time3">Time 3</option>
-            </select>
-          </div>
-          <div className="w-[50%]">
-            <h3 className="text-[#FFF] text-sm font-semibold leading-[144%]">
-              Number of Guests
-            </h3>
-            <input
-              type="number"
-              className="w-full bg-[#2F2F2F] text-[#FFF] text-sm font-semibold leading-[144%] py-3 px-4 rounded-md mt-2"
-            />
-          </div>
-        </div>
-        <div className="flex justify-center p-10">
-          <button className="bg-[#F2890F] text-white text-sm font-semibold leading-[144%] py-3 px-6 rounded-md cursor-pointer">
-            Book Now
-          </button>
-        </div>
+    <div className="fixed inset-0 flex items-center justify-center z-[99999]">
+      <div className="absolute inset-0 bg-[#3D3333] opacity-[0.96]"></div>
+      <div className="relative bg-[#1D1C1C] pl-8 pr-12 pt-8 pb-[50px] w-[480px] min-h-[656px] bg-opacity-100">
+        <CustomCursorWrapper>
+          <VectorCloseIcon
+            className="absolute top-2 right-[-15px] w-[14px] h-[14px]"
+            onClick={onClose}
+          ></VectorCloseIcon>
+        </CustomCursorWrapper>
+        <h2 className="text-white text-[32px] font-extrabold pb-10 leading-[120%] font-variant-numeric">
+          Submit a Request
+        </h2>
+        <BookingForm onSubmitSuccess={onClose} />
       </div>
     </div>
   );
