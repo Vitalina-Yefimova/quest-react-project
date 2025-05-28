@@ -13,7 +13,7 @@ const GoogleMap: React.FC = () => {
           position={center}
           icon={{
             url: "/location-map-icon.svg",
-            scaledSize: { width: 47.5, height: 61 },
+            scaledSize: new google.maps.Size(47.5, 61),
           }}
         />
       </Map>

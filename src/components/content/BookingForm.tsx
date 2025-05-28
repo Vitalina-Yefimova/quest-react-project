@@ -11,6 +11,7 @@ interface BookingFormProps {
 
 const bookingSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
   phone: z.string().regex(/^\+?\d{10,15}$/, "Enter a valid phone number"),
   participants: z
     .string()
@@ -38,7 +39,6 @@ export default function BookingForm({ onSubmitSuccess }: BookingFormProps) {
     setIsLoading(true);
     try {
       const response = await fetch("https://escape-room.com/api/bookings", {
-        // типа аля-придуманный
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export default function BookingForm({ onSubmitSuccess }: BookingFormProps) {
         console.log("Something went wrong. Please try again.");
       }
     } catch (error) {
-      console.log("Error submitting booking request.");
+      console.log("Error submitting booking request.", error);
     }
     setIsLoading(false);
   };
@@ -70,6 +70,19 @@ export default function BookingForm({ onSubmitSuccess }: BookingFormProps) {
         />
         {errors.name && (
           <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
+        )}
+      </div>
+      <div>
+        <label className="text-[#E5E5E5] text-[15px] font-medium leading-[150%] font-variant-numeric">
+          Contact Email
+        </label>
+        <input
+          {...register("email")}
+          placeholder="Email"
+          className="mt-3 py-4 pl-6 rounded-[3px] border-solid border-white border-[1px] text-[#E5E5E5] text-sm font-medium leading-[144%] w-[400px] h-[53px]"
+        />
+        {errors.email && (
+          <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
         )}
       </div>
       <div>

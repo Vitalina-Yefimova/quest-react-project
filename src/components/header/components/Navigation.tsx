@@ -23,8 +23,8 @@ export default function Navigation(): React.ReactElement {
     <nav className="relative">
       <ul className="flex gap-[47px] pt-10">
         {navItems.map(({ path, label }) => (
-          <CustomCursorWrapper>
-            <li key={path}>
+          <CustomCursorWrapper key={path}>
+            <li>
               <NavLink
                 to={path}
                 className={({ isActive }) => {
