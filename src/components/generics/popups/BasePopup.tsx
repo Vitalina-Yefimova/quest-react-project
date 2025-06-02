@@ -14,7 +14,7 @@ export default function GenericPopup({ onClose, children }: GenericPopupProps) {
       <div className="relative bg-[#1D1C1C] pl-8 pr-12 pt-8 pb-[50px] w-[480px] min-h-[656px]">
         <CustomCursorWrapper>
           <VectorCloseIcon
-            className="absolute top-2 right-[-15px] w-[14px] h-[14px] cursor-none"
+            className="absolute top-[-18px] right-[-34px] cursor-none"
             onClick={onClose}
           />
         </CustomCursorWrapper>

@@ -1,7 +1,7 @@
 const VectorCloseIcon = (props) => (
   <svg
-    width="1em"
-    height="1em"
+    width="14px"
+    height="14px"
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

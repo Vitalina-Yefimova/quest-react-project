@@ -3,6 +3,13 @@ import BaseForm from "../../generics/forms/BaseForm";
 
 const schema = z.object({
   name: z.string().min(2),
+  username: z
+    .string()
+    .min(3)
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      "Username can only contain letters, numbers, and underscores"
+    ),
   email: z.string().email(),
   password: z.string().min(6),
   phone: z
@@ -26,6 +33,7 @@ export default function RegisterForm({
       onSuccess={onSubmitSuccess}
       fields={[
         { name: "name", label: "Name" },
+        { name: "username", label: "Username" },
         { name: "email", label: "Email" },
         { name: "password", label: "Password", type: "password" },
         { name: "phone", label: "Phone" },

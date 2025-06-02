@@ -11,21 +11,21 @@ interface Field {
   placeholder?: string;
 }
 
-interface BaseFormProps<T extends FieldValues> {
+interface BaseFormProps<T extends FieldValues, R = unknown> {
   fields: Field[];
   schema: import("zod").ZodSchema<T>;
   endpoint: string;
   submitText?: string;
-  onSuccess?: () => void;
+  onSuccess?: (response: R) => void;
 }
 
-export default function BaseForm<T extends FieldValues>({
+export default function BaseForm<T extends FieldValues, R = unknown>({
   fields,
   schema,
   endpoint,
   submitText = "Submit",
   onSuccess,
-}: BaseFormProps<T>) {
+}: BaseFormProps<T, R>) {
   const {
     register,
     handleSubmit,
@@ -49,7 +49,8 @@ export default function BaseForm<T extends FieldValues>({
       });
 
       if (response.ok) {
-        onSuccess?.();
+        const result = (await response.json()) as R;
+        onSuccess?.(result);
       } else {
         console.log("Something went wrong.");
       }
@@ -60,7 +61,7 @@ export default function BaseForm<T extends FieldValues>({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
       {fields.map(({ name, label, type = "text", placeholder }) => (
         <div key={name}>
           <label className="text-[#E5E5E5] text-[15px] font-medium leading-[150%] font-variant-numeric">
@@ -70,7 +71,7 @@ export default function BaseForm<T extends FieldValues>({
             {...register(name as import("react-hook-form").Path<T>)}
             type={type}
             placeholder={placeholder ?? label}
-            className="mt-3 py-4 pl-6 rounded-[3px] border border-white text-[#E5E5E5] text-sm font-medium leading-[144%] w-[400px] h-[53px]"
+            className="mt-1 py-3 pl-6 rounded-[3px] border border-white text-[#E5E5E5] text-sm font-medium leading-[144%] w-[400px] h-[53px]"
           />
           {errors[name] && (
             <p className="text-red-500 text-xs mt-1">
@@ -81,7 +82,7 @@ export default function BaseForm<T extends FieldValues>({
       ))}
 
       <Button
-        className={`w-[219px] h-[47px] p-3 rounded-[47.32px] font-extrabold text-sm leading-[0.42px] mb-6 mx-auto block cursor-none ${
+        className={`w-[219px] h-[47px] p-3 mt-8 rounded-[47.32px] font-extrabold text-sm leading-[0.42px] mb-6 mx-auto block cursor-none ${
           isChecked ? "bg-[#F28A0F] text-white" : "bg-[#B8B8B8] text-white"
         }`}
       >
