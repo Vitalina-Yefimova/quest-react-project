@@ -5,7 +5,7 @@ import VectorContactsIcon from "../icons/VectorContactsIcon";
 import ContactInfo from "../content/ContactInfo";
 import GoogleMap from "../content/GoogleMap";
 import Footer from "../footer/Footer";
-import contactsBackground from "../../assets/images/contacts-background.png";
+import contactsBackground from "../../assets/image/contacts-background.png";
 
 export default function Contacts(): React.ReactElement {
   return (

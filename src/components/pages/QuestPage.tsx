@@ -1,6 +1,5 @@
 import "../../index.css";
 import { useParams } from "react-router-dom";
-import { questsData } from "../../store/questsData";
 import { useState } from "react";
 import BookingPopup from "../../components/pages/BookingPopup";
 import Button from "../generics/button/Button";
@@ -11,18 +10,21 @@ import ClockIcon from "../icons/ClockIcon";
 import PersonIcon from "../icons/PersonIcon";
 import PuzzleIcon from "../icons/PuzzleIcon";
 import DividerVector from "../generics/divider/DividerVector";
+import { useQuestStore } from "../../store/useQuestStore";
 
 export default function GuestPage() {
   const { id } = useParams();
-  const quest = questsData.find((q) => q.id === id); // Получение данных квеста по id из URL адреса guestPage из хранилища questsData с помощью метода find массива questsData и useParams
-  // q - объект квеста из массива questsData
-  // q.id - id квеста из объекта квеста q
+  const quest = useQuestStore((state) => state.getQuestById(id || ""));
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log("Modal state:", isModalOpen);
+  if (!quest) {
+    return <div className="text-white p-10">Quest not found</div>;
+  }
   return (
     <div
       className="relative bg-no-repeat bg-cover bg-center min-h-screen"
-      style={{ backgroundImage: `url(${quest?.imageBg})` }}
+      style={{
+        backgroundImage: `url(http://localhost:3000${quest?.imageBg ?? ""})`,
+      }}
     >
       <Header />
       <div className="min-h-screen flex flex-col pt-[151px] pl-[600px] pr-[214px]">

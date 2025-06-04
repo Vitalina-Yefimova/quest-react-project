@@ -8,7 +8,6 @@ import MysteryIcon from "../icons/MysteryIcon";
 import DetectiveIcon from "../icons/DetectiveIcon";
 import AdventureIcon from "../icons/AdventureIcon";
 import SciFiIcon from "../icons/SciFiIcon";
-import { questsData } from "../../store/questsData";
 import CustomCursorWrapper from "../generics/customCursor/CustomCursorWrapper";
 import DividerVector from "../generics/divider/DividerVector";
 
@@ -21,14 +20,13 @@ const genres: Genre[] = [
 ];
 
 const GenreNavigation = () => {
-  const { setQuests, setGenres, getAvailableGenres } = useQuestStore();
+  const { setGenres, getAvailableGenres } = useQuestStore();
   const { genre } = useParams(); // Получает жанр из URL (если он есть) для фильтрации квестов по жанру (если жанр не выбран - показывает все квесты) и для выделения активного жанра в навигации по жанрам (если жанр выбран - выделяет его в навигации по жанрам)
   const [availableGenres, setAvailableGenres] = useState<Genre[]>([]); // Состояние доступных жанров для навигации по жанрам (показывает только те жанры, у которых есть квесты)
 
   useEffect(() => {
     setGenres(genres);
-    setQuests(questsData);
-  }, []); // При первом рендере устанавливает жанры и квесты в состояние store
+  }, []);
 
   useEffect(() => {
     setAvailableGenres(getAvailableGenres());

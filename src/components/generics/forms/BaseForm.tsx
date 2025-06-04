@@ -36,11 +36,13 @@ export default function BaseForm<T extends FieldValues, R = unknown>({
 
   const [isLoading, setIsLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onSubmit = async (data: T) => {
     if (!isChecked) return;
 
     setIsLoading(true);
+    setErrorMessage(null);
     try {
       const response = await fetch(endpoint, {
         method: "POST",
@@ -52,10 +54,11 @@ export default function BaseForm<T extends FieldValues, R = unknown>({
         const result = (await response.json()) as R;
         onSuccess?.(result);
       } else {
-        console.log("Something went wrong.");
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || "Something went wrong.");
       }
-    } catch (err) {
-      console.log("Error submitting form:", err);
+    } catch {
+      setErrorMessage("Network error. Please try again later.");
     }
     setIsLoading(false);
   };
@@ -73,10 +76,8 @@ export default function BaseForm<T extends FieldValues, R = unknown>({
             placeholder={placeholder ?? label}
             className="mt-1 py-3 pl-6 rounded-[3px] border border-white text-[#E5E5E5] text-sm font-medium leading-[144%] w-[400px] h-[53px]"
           />
-          {errors[name] && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors[name]?.message as string}
-            </p>
+          {errorMessage && (
+            <p className="text-red-500 text-xs mt-1">{errorMessage}</p>
           )}
         </div>
       ))}

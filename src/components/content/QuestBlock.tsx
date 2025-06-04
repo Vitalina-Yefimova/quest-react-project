@@ -12,11 +12,18 @@ interface QuestBlockProps {
 
 const QuestBlock: React.FC<QuestBlockProps> = ({ quest }) => {
   return (
-    <NavLink to={`/detailed-quest/${quest.id}`} className="relative group">
+    <NavLink
+      to={`/detailed-quest/${quest._id.toString()}`}
+      className="relative group"
+    >
       <CustomCursorWrapper>
         <div className="relative w-full">
           <img
-            src={quest.image}
+            src={
+              quest.image?.startsWith("http")
+                ? quest.image
+                : `http://localhost:3000${quest.image ?? ""}`
+            }
             alt={quest.title}
             className="w-full object-cover select-none"
           />

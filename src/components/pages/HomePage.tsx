@@ -31,7 +31,7 @@ export default function HomePage(): React.ReactElement {
       <GenreNavigation />
       <div className="grid grid-cols-3 gap-x-6 gap-y-8 pl-[136px] pr-[150px] pb-20">
         {filteredQuests.map((quest) => (
-          <QuestBlock key={quest.id} quest={quest} />
+          <QuestBlock key={quest._id.toString()} quest={quest} />
         ))}
       </div>
       <Footer />
