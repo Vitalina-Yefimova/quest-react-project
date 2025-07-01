@@ -6,10 +6,13 @@ export interface Genre {
 }
 
 export interface Quest {
-  _id: string;
+  id: string;
   title: string;
   genres: { genreName: string }[];
-  players: string;
+  players: {
+    min: number;
+    max: number;
+  };
   difficulty: "easy" | "medium" | "hard";
   duration: "60 min" | "90 min" | "120 min";
   description?: string;
@@ -68,7 +71,7 @@ export const useQuestStore = create<QuestsStore>((set, get) => ({
   // .some() – метод массива, который возвращает true, если хотя бы один элемент подходит
 
   getQuestById: (id: string) => {
-    return get().quests.find((quest) => quest._id === id);
+    return get().quests.find((quest) => quest.id === id);
   },
 }));
 

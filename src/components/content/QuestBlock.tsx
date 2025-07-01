@@ -13,7 +13,7 @@ interface QuestBlockProps {
 const QuestBlock: React.FC<QuestBlockProps> = ({ quest }) => {
   return (
     <NavLink
-      to={`/detailed-quest/${quest._id.toString()}`}
+      to={`/detailed-quest/${quest.id.toString()}`}
       className="relative group"
     >
       <CustomCursorWrapper>
@@ -35,7 +35,9 @@ const QuestBlock: React.FC<QuestBlockProps> = ({ quest }) => {
               <div className="flex gap-2">
                 <PersonIcon />
                 <p className="text-[#E5E5E5] text-[13px] leading-[144%] font-medium font-variant-numeric">
-                  {quest.players}
+                  {typeof quest.players === "object"
+                    ? `${quest.players.min} – ${quest.players.max}`
+                    : quest.players ?? "?"}
                 </p>
               </div>
               <DividerVector className="bg-white/50 w-[1px] h-[20px]"></DividerVector>

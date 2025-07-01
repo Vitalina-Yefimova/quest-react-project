@@ -20,17 +20,19 @@ const genres: Genre[] = [
 ];
 
 const GenreNavigation = () => {
-  const { setGenres, getAvailableGenres } = useQuestStore();
+  const { quests, setGenres, getAvailableGenres } = useQuestStore();
   const { genre } = useParams(); // Получает жанр из URL (если он есть) для фильтрации квестов по жанру (если жанр не выбран - показывает все квесты) и для выделения активного жанра в навигации по жанрам (если жанр выбран - выделяет его в навигации по жанрам)
   const [availableGenres, setAvailableGenres] = useState<Genre[]>([]); // Состояние доступных жанров для навигации по жанрам (показывает только те жанры, у которых есть квесты)
 
   useEffect(() => {
-    setGenres(genres);
-  }, []);
+    if (quests.length > 0) {
+      setAvailableGenres(getAvailableGenres());
+    }
+  }, [quests, getAvailableGenres]); // При изменении доступных жанров устанавливает их в состояние компонента для отображения в навигации по жанрам (показывает только те жанры, у которых есть квесты)
 
   useEffect(() => {
-    setAvailableGenres(getAvailableGenres());
-  }, [getAvailableGenres]); // При изменении доступных жанров устанавливает их в состояние компонента для отображения в навигации по жанрам (показывает только те жанры, у которых есть квесты)
+    setGenres(genres);
+  }, [setGenres]);
 
   return (
     <nav className="pl-[137px] pb-[39px] relative">

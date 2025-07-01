@@ -11,26 +11,20 @@ interface Field {
   placeholder?: string;
 }
 
-interface BaseFormProps<T extends FieldValues, R = unknown> {
+interface BaseFormProps<T extends FieldValues> {
   fields: Field[];
   schema: import("zod").ZodSchema<T>;
-  endpoint: string;
   submitText?: string;
-  onSuccess?: (response: R) => void;
+  onSubmit: (data: T) => Promise<void>;
 }
 
-export default function BaseForm<T extends FieldValues, R = unknown>({
+export default function BaseForm<T extends FieldValues>({
   fields,
   schema,
-  endpoint,
   submitText = "Submit",
-  onSuccess,
-}: BaseFormProps<T, R>) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<T>({
+  onSubmit,
+}: BaseFormProps<T>) {
+  const { register, handleSubmit } = useForm<T>({
     resolver: zodResolver(schema),
   });
 
@@ -38,33 +32,27 @@ export default function BaseForm<T extends FieldValues, R = unknown>({
   const [isChecked, setIsChecked] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const onSubmit = async (data: T) => {
+  const internalSubmit = async (data: T) => {
     if (!isChecked) return;
 
     setIsLoading(true);
     setErrorMessage(null);
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
 
-      if (response.ok) {
-        const result = (await response.json()) as R;
-        onSuccess?.(result);
+    try {
+      await onSubmit(data);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
       } else {
-        const errorData = await response.json();
-        setErrorMessage(errorData.message || "Something went wrong.");
+        setErrorMessage("Something went wrong.");
       }
-    } catch {
-      setErrorMessage("Network error. Please try again later.");
     }
+
     setIsLoading(false);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+    <form onSubmit={handleSubmit(internalSubmit)} className="space-y-2">
       {fields.map(({ name, label, type = "text", placeholder }) => (
         <div key={name}>
           <label className="text-[#E5E5E5] text-[15px] font-medium leading-[150%] font-variant-numeric">
@@ -83,6 +71,7 @@ export default function BaseForm<T extends FieldValues, R = unknown>({
       ))}
 
       <Button
+        type="submit"
         className={`w-[219px] h-[47px] p-3 mt-8 rounded-[47.32px] font-extrabold text-sm leading-[0.42px] mb-6 mx-auto block cursor-none ${
           isChecked ? "bg-[#F28A0F] text-white" : "bg-[#B8B8B8] text-white"
         }`}

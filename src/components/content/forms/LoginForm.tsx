@@ -2,13 +2,9 @@ import { z } from "zod";
 import BaseForm from "../../generics/forms/BaseForm";
 import { useUserStore } from "../../../store/userStore";
 
-type AuthResponse = {
-  access_token: string;
-};
-
 const schema = z.object({
-  login: z.string().min(3),
-  password: z.string().min(6),
+  email: z.string().email(),
+  password: z.string().min(8),
 });
 
 export default function LoginForm({
@@ -18,15 +14,40 @@ export default function LoginForm({
 }) {
   const setUser = useUserStore((state) => state.setUser);
 
-  const handleSuccess = async (response: AuthResponse) => {
-    const token = response.access_token;
-    localStorage.setItem("token", token);
-
-    const res = await fetch("http://localhost:3000/auth/me", {
+  const handleSubmit = async (data: { email: string; password: string }) => {
+    const response = await fetch("http://localhost:3000/auth/sign-in", {
+      method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Login failed");
+    }
+
+    const { access_token } = await response.json();
+
+    if (!access_token) {
+      throw new Error("No token received");
+    }
+
+    localStorage.setItem("token", access_token);
+
+    const payload = JSON.parse(atob(access_token.split(".")[1]));
+    const userId = payload.sub;
+
+    const res = await fetch(`http://localhost:3000/users/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
       },
     });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch user data");
+    }
 
     const user = await res.json();
     setUser(user);
@@ -36,11 +57,10 @@ export default function LoginForm({
   return (
     <BaseForm
       schema={schema}
-      endpoint="http://localhost:3000/auth/login"
       submitText="Login"
-      onSuccess={handleSuccess}
+      onSubmit={handleSubmit}
       fields={[
-        { name: "login", label: "Username or Email" },
+        { name: "email", label: "Email" },
         { name: "password", label: "Password", type: "password" },
       ]}
     />

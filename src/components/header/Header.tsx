@@ -47,14 +47,14 @@ export default function Header({
                   onClick={() => setOpenMenu((prev) => !prev)}
                   className="text-sm bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 transition flex items-center gap-2"
                 >
-                  @{user.username}
+                  {user.firstName}
                   <ChevronDown size={20} className="mt-[1px]" />
                 </button>
 
                 {openMenu && (
                   <div className="absolute right-0 mt-2 bg-white text-black rounded-md shadow-md w-36 z-50">
                     <a
-                      href={`/u/${user.username}`}
+                      href={`/u/${user.firstName}`}
                       className="block px-4 py-2 hover:bg-gray-100 text-sm"
                     >
                       My Profile

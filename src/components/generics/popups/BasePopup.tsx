@@ -2,12 +2,12 @@ import VectorCloseIcon from "../../icons/VectorCloseIcon";
 import CustomCursorWrapper from "../../generics/customCursor/CustomCursorWrapper";
 import { ReactNode } from "react";
 
-interface GenericPopupProps {
+interface BasePopupProps {
   onClose: () => void;
   children: ReactNode;
 }
 
-export default function GenericPopup({ onClose, children }: GenericPopupProps) {
+export default function BasePopup({ onClose, children }: BasePopupProps) {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-[99999]">
       <div className="absolute inset-0 bg-[#3D3333] opacity-[0.96]" />

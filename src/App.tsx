@@ -1,11 +1,12 @@
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Routes } from "react-router";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./components/pages/HomePage";
 import ContactsPage from "./components/pages/ContactsPage";
 import QuestPage from "./components/pages/QuestPage";
 import NotFoundPage from "./components/pages/NotFoundPage";
 import { useEffect } from "react";
 import { useQuestStore } from "./store/useQuestStore";
+import VerifyPage from "./components/pages/VerifyPage";
+import CheckEmail from "./components/pages/CheckEmail";
 
 export default function App() {
   const setQuests = useQuestStore((state) => state.setQuests);
@@ -44,6 +45,8 @@ export default function App() {
           <Route path="/special-offers" element={<NotFoundPage />} />
           <Route path="/privacy-policy" element={<NotFoundPage />} />
           <Route path="/user-agreement" element={<NotFoundPage />} />
+          <Route path="/verify" element={<VerifyPage />} />
+          <Route path="/check-email" element={<CheckEmail />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>

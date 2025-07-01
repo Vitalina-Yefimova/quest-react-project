@@ -9,16 +9,17 @@
     "types": [
       "jest",
       "@testing-library/jest-dom",
-      "react", 
+      "react",
       "react-dom"
-    ]
-    },
-    "include": [],
-    "jsx": "react-jsx", 
+    ],
+    "jsx": "react-jsx",
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "module": "ESNext",
-    "target": "ESNext"
-  }
+    "target": "ESNext",
+    "lib": ["DOM", "ESNext"]
+  },
+  "include": []
+}

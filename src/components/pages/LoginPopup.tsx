@@ -1,10 +1,10 @@
-import GenericPopup from "../generics/popups/BasePopup";
+import BasePopup from "../generics/popups/BasePopup.tsx";
 import LoginForm from "../content/forms/LoginForm";
 
 export default function LoginPopup({ onClose }: { onClose: () => void }) {
   return (
-    <GenericPopup onClose={onClose}>
+    <BasePopup onClose={onClose}>
       <LoginForm onSubmitSuccess={onClose} />
-    </GenericPopup>
+    </BasePopup>
   );
 }

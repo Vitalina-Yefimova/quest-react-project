@@ -12,18 +12,19 @@ import PuzzleIcon from "../icons/PuzzleIcon";
 import DividerVector from "../generics/divider/DividerVector";
 import { useQuestStore } from "../../store/useQuestStore";
 
-export default function GuestPage() {
+export default function QuestPage() {
   const { id } = useParams();
   const quest = useQuestStore((state) => state.getQuestById(id || ""));
   const [isModalOpen, setIsModalOpen] = useState(false);
   if (!quest) {
     return <div className="text-white p-10">Quest not found</div>;
   }
+
   return (
     <div
       className="relative bg-no-repeat bg-cover bg-center min-h-screen"
       style={{
-        backgroundImage: `url(http://localhost:3000${quest?.imageBg ?? ""})`,
+        backgroundImage: `url(${quest?.imageBg ?? ""})`,
       }}
     >
       <Header />
@@ -46,7 +47,9 @@ export default function GuestPage() {
           <div className="flex gap-2">
             <PersonIcon />
             <p className="text-[#E5E5E5] text-sm not-italic font-normal leading-[144%] font-variant-numeric">
-              {quest?.players}
+              {typeof quest.players === "object"
+                ? `${quest.players.min} – ${quest.players.max}`
+                : quest.players ?? "?"}
             </p>
           </div>
           <DividerVector className="bg-white/36 w-[1px] h-[20px]"></DividerVector>
