@@ -1,14 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function CheckEmail() {
   const navigate = useNavigate();
-
+  const [countdown, setCountdown] = useState(8);
   useEffect(() => {
+    const interval = setInterval(() => {
+      setCountdown((prev) => prev - 1);
+    }, 1000);
+
     const timeout = setTimeout(() => {
       navigate("/");
     }, 8000);
-    return () => clearTimeout(timeout);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
   }, [navigate]);
 
   return (
@@ -29,7 +37,7 @@ export default function CheckEmail() {
         </button>
 
         <p className="text-sm text-gray-400 mt-4">
-          You’ll be redirected automatically in 8 seconds...
+          You’ll be redirected automatically in {countdown} seconds...
         </p>
       </div>
     </div>

@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { useQuestStore } from "./store/useQuestStore";
 import VerifyPage from "./components/pages/VerifyPage";
 import CheckEmail from "./components/pages/CheckEmail";
+import ProfilePage from "./components/pages/ProfilePage";
+import { handleTokenLogin } from "./utils/handleTokenLogin";
 
 export default function App() {
   const setQuests = useQuestStore((state) => state.setQuests);
@@ -30,6 +32,7 @@ export default function App() {
           console.error("Error fetching quests:", error);
         });
     }
+    handleTokenLogin().catch(() => {});
   }, []);
 
   return (
@@ -47,6 +50,7 @@ export default function App() {
           <Route path="/user-agreement" element={<NotFoundPage />} />
           <Route path="/verify" element={<VerifyPage />} />
           <Route path="/check-email" element={<CheckEmail />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>

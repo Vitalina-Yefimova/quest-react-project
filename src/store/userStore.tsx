@@ -1,11 +1,13 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-interface User {
+export interface User {
   id: string;
   lastName: string;
   firstName: string;
   phone: string;
   email: string;
+  verify?: boolean;
 }
 
 interface UserStore {
@@ -14,11 +16,19 @@ interface UserStore {
   logout: () => void;
 }
 
-export const useUserStore = create<UserStore>((set) => ({
-  user: null,
-  setUser: (user) => set({ user }),
-  logout: () => {
-    localStorage.removeItem("token");
-    set({ user: null });
-  },
-}));
+export const useUserStore = create<UserStore>()(
+  persist(
+    (set) => ({
+      user: null,
+      setUser: (user) => set({ user }),
+      logout: () => {
+        document.cookie = "access_token=; path=/; max-age=0; samesite=strict";
+        set({ user: null });
+      },
+    }),
+    {
+      name: "user-storage",
+      partialize: (state) => ({ user: state.user }),
+    }
+  )
+);

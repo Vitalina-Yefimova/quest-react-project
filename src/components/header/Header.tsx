@@ -4,22 +4,21 @@ import Navigation from "./components/Navigation";
 import PhoneNumber from "./components/PhoneNumber";
 import CustomCursorWrapper from "../generics/customCursor/CustomCursorWrapper";
 import { useState, useEffect, useRef } from "react";
-import LoginPopup from "../pages/LoginPopup";
-import RegisterPopup from "../pages/RegisterPopup";
+import AuthPopup from "../pages/AuthPopup";
 import { useUserStore } from "../../store/userStore";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, User } from "lucide-react";
+import UserDropdownMenu from "./components/UserDropdownMenu";
 
 export default function Header({
   className = "",
 }: {
   className?: string;
 }): React.ReactElement {
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const { user, logout } = useUserStore();
+  const { user } = useUserStore();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -43,50 +42,29 @@ export default function Header({
           <div className="flex items-center gap-3 font-bold pt-10">
             {user ? (
               <div className="relative" ref={menuRef}>
-                <button
-                  onClick={() => setOpenMenu((prev) => !prev)}
-                  className="text-sm bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 transition flex items-center gap-2"
-                >
-                  {user.firstName}
-                  <ChevronDown size={20} className="mt-[1px]" />
-                </button>
+                <CustomCursorWrapper>
+                  <button
+                    onClick={() => setOpenMenu((prev) => !prev)}
+                    className="text-sm bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 transition flex items-center gap-2 cursor-none"
+                  >
+                    My Profile
+                    <ChevronDown size={20} className="mt-[1px]" />
+                  </button>
+                </CustomCursorWrapper>
 
                 {openMenu && (
-                  <div className="absolute right-0 mt-2 bg-white text-black rounded-md shadow-md w-36 z-50">
-                    <a
-                      href={`/u/${user.firstName}`}
-                      className="block px-4 py-2 hover:bg-gray-100 text-sm"
-                    >
-                      My Profile
-                    </a>
-                    <button
-                      onClick={() => {
-                        logout();
-                        setOpenMenu(false);
-                      }}
-                      className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
-                    >
-                      Logout
-                    </button>
-                  </div>
+                  <UserDropdownMenu onClose={() => setOpenMenu(false)} />
                 )}
               </div>
             ) : (
               <>
                 <CustomCursorWrapper>
                   <button
-                    onClick={() => setIsLoginOpen(true)}
-                    className="text-white text-sm hover:text-orange-400 transition px-3 py-1 cursor-none"
+                    onClick={() => setIsAuthOpen(true)}
+                    className="text-white text-sm bg-[#F28A0F] transition px-5 py-2 rounded-md cursor-none"
                   >
-                    Login
-                  </button>
-                </CustomCursorWrapper>
-                <CustomCursorWrapper>
-                  <button
-                    onClick={() => setIsRegisterOpen(true)}
-                    className="text-sm bg-orange-500 text-white px-3 py-1 rounded-md hover:bg-orange-600 transition cursor-none"
-                  >
-                    Sign Up
+                    <User size={18} className="inline mr-2" />
+                    Log in
                   </button>
                 </CustomCursorWrapper>
               </>
@@ -94,11 +72,7 @@ export default function Header({
           </div>
         </div>
       </header>
-
-      {isLoginOpen && <LoginPopup onClose={() => setIsLoginOpen(false)} />}
-      {isRegisterOpen && (
-        <RegisterPopup onClose={() => setIsRegisterOpen(false)} />
-      )}
+      {isAuthOpen && <AuthPopup onClose={() => setIsAuthOpen(false)} />}
     </>
   );
 }
