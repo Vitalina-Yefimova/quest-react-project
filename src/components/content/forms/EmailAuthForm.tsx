@@ -2,6 +2,8 @@ import { z } from "zod";
 import BaseForm from "../../generics/forms/BaseForm";
 import { useNavigate } from "react-router-dom";
 import { handleTokenLogin } from "../../../utils/handleTokenLogin";
+import { useState } from "react";
+import ForgotPasswordPopup from "../popups/reset-password/ForgotPasswordPopup";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email"),
@@ -42,6 +44,7 @@ export default function EmailStepAuth({
   onSuccess: () => void;
 }) {
   const navigate = useNavigate();
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const handleSubmit = async (
     data: z.infer<typeof loginSchema> | z.infer<typeof registerSchema>
@@ -128,11 +131,27 @@ export default function EmailStepAuth({
         ];
 
   return (
-    <BaseForm
-      schema={schema}
-      submitText={AuthType === "login" ? "Login" : "Sign Up"}
-      onSubmit={handleSubmit}
-      fields={fields}
-    />
+    <>
+      <BaseForm
+        schema={schema}
+        submitText={AuthType === "login" ? "Login" : "Sign Up"}
+        onSubmit={handleSubmit}
+        fields={fields}
+      />
+      {AuthType === "login" && (
+        <div className="pt-3 text-center font-semibold">
+          <button
+            type="button"
+            onClick={() => setShowForgotPassword(true)}
+            className="text-sm text-[#F28A0F] underline"
+          >
+            Forgot password?
+          </button>
+        </div>
+      )}
+      {showForgotPassword && (
+        <ForgotPasswordPopup onClose={() => setShowForgotPassword(false)} />
+      )}
+    </>
   );
 }
