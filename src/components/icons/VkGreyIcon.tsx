@@ -1,4 +1,6 @@
-const VkGreyIcon = (props) => (
+import React from "react";
+
+const VkGreyIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     width="28px"
     height="28px"

@@ -1,4 +1,6 @@
-const DetectiveIcon = (props) => (
+import React from "react";
+
+const DetectiveIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     width="40px"
     height="30px"

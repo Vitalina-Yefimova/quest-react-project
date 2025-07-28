@@ -1,4 +1,6 @@
-const CursorHandIcon = (props) => (
+import React from "react";
+
+const CursorHandIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     width="32px"
     height="32px"

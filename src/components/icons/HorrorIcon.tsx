@@ -1,4 +1,6 @@
-const HorrorIcon = (props) => (
+import React from "react";
+
+const HorrorIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     width="30px"
     height="30px"

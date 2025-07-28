@@ -1,7 +1,7 @@
 import { useState } from "react";
-import BasePopup from "../generics/popups/BasePopup.tsx";
-import EmailAuthForm from "../content/forms/EmailAuthForm.tsx";
-import PhoneAuthForm from "../content/forms/PhoneAuthForm.tsx";
+import BasePopup from "../generics/popups/BasePopup";
+import EmailAuthForm from "../content/forms/EmailAuthForm";
+import PhoneAuthForm from "../content/forms/PhoneAuthForm";
 
 export default function AuthPopup({ onClose }: { onClose: () => void }) {
   const [authType, setAuthType] = useState<"login" | "register">("login");
@@ -12,7 +12,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
 
   const renderForm = () => {
     const props = {
-      AuthType: authType,
+      authType: authType,
       onSuccess: onClose,
       switchToPhone,
       switchToEmail,

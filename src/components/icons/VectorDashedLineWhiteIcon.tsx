@@ -1,4 +1,8 @@
-const VectorDashedLineWhiteIcon = (props) => (
+import React from "react";
+
+const VectorDashedLineWhiteIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
+  props
+) => (
   <svg
     width="1em"
     height="1em"

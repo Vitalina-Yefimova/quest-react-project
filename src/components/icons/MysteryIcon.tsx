@@ -1,4 +1,6 @@
-const MysteryIcon = (props) => (
+import React from "react";
+
+const MysteryIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     width="30px"
     height="30px"

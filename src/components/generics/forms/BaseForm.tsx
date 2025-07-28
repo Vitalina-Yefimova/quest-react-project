@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { JSX } from "react";
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm, FieldValues, UseFormRegisterReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../generics/button/Button";
 import { Link } from "react-router-dom";
@@ -9,10 +9,13 @@ interface Field {
   name: string;
   label: string;
   type?: string;
-  defaultValue?: string;
+  defaultValue?: string | number;
   showVerifyButton?: boolean;
   onVerifyClick?: () => void;
   isVerifying?: boolean;
+  min?: number;
+  max?: number;
+  render?: (props: { field: UseFormRegisterReturn }) => JSX.Element;
 }
 
 interface BaseFormProps<T extends FieldValues> {
@@ -91,21 +94,35 @@ export default function BaseForm<T extends FieldValues>({
           name,
           label,
           type = "text",
+          defaultValue,
+          min,
+          max,
           showVerifyButton,
           onVerifyClick,
           isVerifying,
+          render,
         }) => {
           const value = watch(name as import("react-hook-form").Path<T>);
           const isFilled = value?.toString().length > 0;
+          const fieldProps = register(
+            name as import("react-hook-form").Path<T>
+          );
 
           return (
             <div key={name} className="relative w-full h-[40px]">
-              <input
-                {...register(name as import("react-hook-form").Path<T>)}
-                type={showPassword[name] ? "text" : type}
-                id={name}
-                className="peer w-full h-full px-4 py-3 border border-white rounded-[3px] bg-transparent text-[#E5E5E5] text-base placeholder-transparent"
-              />
+              {render ? (
+                render({ field: fieldProps })
+              ) : (
+                <input
+                  {...fieldProps}
+                  type={showPassword[name] ? "text" : type}
+                  id={name}
+                  defaultValue={defaultValue}
+                  min={min}
+                  max={max}
+                  className="peer w-full h-full px-4 py-3 border border-white rounded-[3px] bg-transparent text-[#E5E5E5] text-base placeholder-transparent"
+                />
+              )}
               <label
                 htmlFor={name}
                 className={`absolute left-4 text-[#E5E5E5] text-sm transition-all duration-150 pointer-events-none

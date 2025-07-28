@@ -1,4 +1,6 @@
-const PersonIcon = (props) => (
+import React from "react";
+
+const PersonIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     width="1em"
     height="1em"

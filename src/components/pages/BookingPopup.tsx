@@ -1,4 +1,4 @@
-import BasePopup from "../generics/popups/BasePopup.tsx";
+import BasePopup from "../generics/popups/BasePopup";
 import BookingForm from "../content/forms/BookingForm";
 
 export default function BookingPopup({ onClose }: { onClose: () => void }) {

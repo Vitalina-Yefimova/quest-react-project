@@ -1,4 +1,6 @@
-const VectorCloseIcon = (props) => (
+import React from "react";
+
+const VectorCloseIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     width="14px"
     height="14px"

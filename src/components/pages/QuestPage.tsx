@@ -34,19 +34,13 @@ export default function QuestPage() {
       <Header />
 
       <div className="min-h-screen flex flex-col pt-[151px] pl-[600px] pr-[214px]">
-        <div className="flex items-center justify-between pr-4 pb-8">
+        <div className="flex justify-between items-center pr-4 pb-8">
           <PageTitle
             className="pl-6"
             overline={quest?.genres?.map((g) => g.genreName).join(", ") || ""}
             title={quest?.title || ""}
           />
-          {user && (
-            <FavoritesToggle
-              questId={quest.id}
-              iconOnly={false}
-              className="mr-1"
-            />
-          )}
+          {user && <FavoritesToggle questId={quest.id} iconOnly={false} />}
         </div>
 
         <div className="flex pl-[30px] gap-4 pb-5">
@@ -77,12 +71,18 @@ export default function QuestPage() {
           {quest?.description}
         </p>
 
-        <Button
-          className="flex items-center justify-center w-[250px] h-[65px] bg-[#F28A0F] text-white text-[17px] font-extrabold not-italic leading-normal tracking-[0.51px] cursor-none rounded-full ml-[30px]"
-          onClick={() => setIsModalOpen(true)}
-        >
-          Book Now
-        </Button>
+        {user ? (
+          <Button
+            className="flex items-center justify-center w-[200px] h-[60px] bg-[#F28A0F] text-white text-[17px] font-extrabold not-italic leading-normal tracking-[0.51px] rounded-full ml-[30px] cursor-none"
+            onClick={() => setIsModalOpen(true)}
+          >
+            Book Now
+          </Button>
+        ) : (
+          <p className="text-gray-300 text-sm pl-[30px]">
+            Log in to book this quest
+          </p>
+        )}
         <Footer />
       </div>
       {isModalOpen && <BookingPopup onClose={() => setIsModalOpen(false)} />}

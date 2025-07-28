@@ -1,4 +1,4 @@
-const AllQuestsIcon = (props) => (
+const AllQuestsIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     width="26px"
     height="30px"

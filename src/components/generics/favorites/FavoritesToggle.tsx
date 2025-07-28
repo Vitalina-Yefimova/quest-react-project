@@ -31,12 +31,10 @@ export default function FavoritesToggle({
         interface Favorite {
           questId: string;
         }
-
-        const favoritesTyped = favorites as Favorite[];
-        const exists = favoritesTyped.find(
-          (favorite: Favorite) => favorite.questId === questId.toString()
+        const exists = (favorites as Favorite[]).some(
+          (favorite) => favorite.questId === questId.toString()
         );
-        setIsFavorite(!!exists);
+        setIsFavorite(exists);
       });
     }
   }, [user, questId]);
@@ -67,7 +65,7 @@ export default function FavoritesToggle({
           e.stopPropagation();
           toggleFavorite();
         }}
-        className={`transition p-1 cursor-none ${className}`}
+        className={`transition cursor-none ${className}`}
       >
         {iconOnly ? (
           isFavorite ? (
@@ -77,9 +75,12 @@ export default function FavoritesToggle({
           )
         ) : (
           <span
-            className={`text-sm font-semibold px-5 py-3 rounded-full cursor-none ${
-              isFavorite ? "bg-red-600" : "bg-[#F28A0F]"
-            }`}
+            className={`flex items-center justify-center text-white font-semibold min-w-[200px] h-[50px] rounded-full shadow-lg transition duration-300 cursor-none
+  ${
+    isFavorite
+      ? "bg-red-600 hover:bg-red-700"
+      : "bg-[#F28A0F] hover:bg-[#d97706]"
+  }`}
           >
             {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
           </span>

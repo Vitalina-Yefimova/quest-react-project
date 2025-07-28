@@ -1,4 +1,6 @@
-const VectorLineIcon = (props) => (
+import React from "react";
+
+const VectorLineIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     width="1em"
     height="1em"

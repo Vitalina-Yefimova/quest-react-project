@@ -3,7 +3,7 @@ import HomePage from "./components/pages/HomePage";
 import ContactsPage from "./components/pages/ContactsPage";
 import QuestPage from "./components/pages/QuestPage";
 import NotFoundPage from "./components/pages/NotFoundPage";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useQuestStore } from "./store/useQuestStore";
 import VerifyPage from "./components/pages/VerifyPage";
 import CheckEmail from "./components/pages/CheckEmail";
@@ -15,7 +15,7 @@ export default function InnerApp() {
   const setQuests = useQuestStore((state) => state.setQuests);
   const quests = useQuestStore((state) => state.quests);
   const [searchParams] = useSearchParams();
-  const [showReset, setShowReset] = useState(false);
+  const token = searchParams.get("token");
 
   useEffect(() => {
     if (quests.length === 0) {
@@ -31,13 +31,7 @@ export default function InnerApp() {
     }
 
     handleTokenLogin().catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    if (searchParams.get("token")) {
-      setShowReset(true);
-    }
-  }, [searchParams]);
+  }, [quests.length, setQuests]);
 
   return (
     <>
@@ -54,8 +48,9 @@ export default function InnerApp() {
         <Route path="/verify" element={<VerifyPage />} />
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/profile" element={<ProfilePage />} />
-        {/* <Route path="/reset-password" element={<HomePage />} /> */}
-        <Route path="/reset-password" element={<ResetPasswordPopup />} />
+        {token && (
+          <Route path="/reset-password" element={<ResetPasswordPopup />} />
+        )}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>

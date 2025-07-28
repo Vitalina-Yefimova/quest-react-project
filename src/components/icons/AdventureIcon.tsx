@@ -1,4 +1,6 @@
-const AdventureIcon = (props) => (
+import React from "react";
+
+const AdventureIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     width="36px"
     height="30px"

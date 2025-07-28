@@ -1,4 +1,6 @@
-const LocationIcon = (props) => (
+import React from "react";
+
+const LocationIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     width="1em"
     height="1em"

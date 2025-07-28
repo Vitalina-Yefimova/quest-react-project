@@ -7,7 +7,7 @@ import GoogleMap from "../content/GoogleMap";
 import Footer from "../footer/Footer";
 import contactsBackground from "../../assets/image/contacts-background.png";
 
-export default function Contacts(): React.ReactElement {
+export default function ContactsPage(): React.ReactElement {
   return (
     <section className="relative w-full min-h-screen overflow-hidden">
       <div

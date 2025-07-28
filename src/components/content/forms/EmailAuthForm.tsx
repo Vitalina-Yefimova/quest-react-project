@@ -36,11 +36,11 @@ const registerSchema = z
     message: "Passwords do not match",
   });
 
-export default function EmailStepAuth({
-  AuthType,
+export default function EmailAuthForm({
+  authType,
   onSuccess,
 }: {
-  AuthType: "login" | "register";
+  authType: "login" | "register";
   onSuccess: () => void;
 }) {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ export default function EmailStepAuth({
   const handleSubmit = async (
     data: z.infer<typeof loginSchema> | z.infer<typeof registerSchema>
   ) => {
-    if (AuthType === "login") {
+    if (authType === "login") {
       const response = await fetch("http://localhost:3000/auth/sign-in", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -109,10 +109,10 @@ export default function EmailStepAuth({
     }
   };
 
-  const schema = AuthType === "login" ? loginSchema : registerSchema;
+  const schema = authType === "login" ? loginSchema : registerSchema;
 
   const fields =
-    AuthType === "login"
+    authType === "login"
       ? [
           { name: "email", label: "Email" },
           { name: "password", label: "Password", type: "password" },
@@ -134,11 +134,11 @@ export default function EmailStepAuth({
     <>
       <BaseForm
         schema={schema}
-        submitText={AuthType === "login" ? "Login" : "Sign Up"}
+        submitText={authType === "login" ? "Login" : "Sign Up"}
         onSubmit={handleSubmit}
         fields={fields}
       />
-      {AuthType === "login" && (
+      {authType === "login" && (
         <div className="pt-3 text-center font-semibold">
           <button
             type="button"

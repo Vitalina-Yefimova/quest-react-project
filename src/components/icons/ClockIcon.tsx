@@ -1,4 +1,6 @@
-const ClockIcon = (props) => (
+import React from "react";
+
+const ClockIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     width="1em"
     height="1em"

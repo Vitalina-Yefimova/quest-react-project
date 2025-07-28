@@ -1,6 +1,6 @@
 import "../../index.css";
 import SkypeGreyIcon from "../icons/SkypeGreyIcon";
-import { VkGreyIcon } from "../icons";
+import VkGreyIcon from "../icons/VkGreyIcon";
 
 export default function Footer(): React.ReactElement {
   return (

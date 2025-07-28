@@ -1,4 +1,6 @@
-const SciFiIcon = (props) => (
+import React from "react";
+
+const SciFiIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     width="28px"
     height="30px"

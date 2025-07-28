@@ -1,4 +1,6 @@
-const VerticalDividerIcon = (props) => (
+import React from "react";
+
+const VerticalDividerIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     width="1px"
     height="40px"
