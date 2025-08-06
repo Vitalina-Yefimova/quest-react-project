@@ -8,6 +8,10 @@ export interface User {
   phone: string;
   email: string;
   verify?: boolean;
+  emailVerified?: boolean;
+  newEmail?: string;
+  hasPassword?: boolean;
+  authMethod: "email" | "phone";
 }
 
 interface UserStore {
@@ -23,6 +27,7 @@ export const useUserStore = create<UserStore>()(
       setUser: (user) => set({ user }),
       logout: () => {
         document.cookie = "access_token=; path=/; max-age=0; samesite=strict";
+        localStorage.removeItem("token");
         set({ user: null });
       },
     }),

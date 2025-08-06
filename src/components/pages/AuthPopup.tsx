@@ -1,19 +1,40 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import BasePopup from "../generics/popups/BasePopup";
 import EmailAuthForm from "../content/forms/EmailAuthForm";
 import PhoneAuthForm from "../content/forms/PhoneAuthForm";
 
-export default function AuthPopup({ onClose }: { onClose: () => void }) {
-  const [authType, setAuthType] = useState<"login" | "register">("login");
-  const [method, setMethod] = useState<"email" | "phone">("phone");
+export default function AuthPopup({
+  onClose,
+  initialAuthType = "login",
+  initialMethod = "phone",
+}: {
+  onClose: () => void;
+  initialAuthType?: "login" | "register";
+  initialMethod?: "email" | "phone";
+}) {
+  const [authType, setAuthType] = useState<"login" | "register">(
+    initialAuthType
+  );
+  const [method, setMethod] = useState<"email" | "phone">(initialMethod);
+  const navigate = useNavigate();
+
+  const handleSuccess = () => {
+    if (authType === "login" || method === "phone") {
+      navigate("/");
+    } else {
+      navigate("/check-email");
+    }
+    onClose();
+  };
 
   const switchToPhone = () => setMethod("phone");
   const switchToEmail = () => setMethod("email");
 
   const renderForm = () => {
     const props = {
-      authType: authType,
-      onSuccess: onClose,
+      authType,
+      onSuccess: handleSuccess,
       switchToPhone,
       switchToEmail,
     };

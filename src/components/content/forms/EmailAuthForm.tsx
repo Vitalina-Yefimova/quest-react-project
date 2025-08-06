@@ -73,6 +73,7 @@ export default function EmailAuthForm({
         email: registerData.email,
         phone: registerData.phone,
         password: registerData.password,
+        frontendUrl: `${window.location.origin}/verify`,
       };
 
       const registerResponse = await fetch(
@@ -87,21 +88,6 @@ export default function EmailAuthForm({
       if (!registerResponse.ok) {
         const error = await registerResponse.json();
         throw new Error(error.message || "Registration failed");
-      }
-
-      const emailResponse = await fetch("http://localhost:3000/email/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: data.email,
-          frontendUrl: `${window.location.origin}/verify`,
-          type: "verify",
-        }),
-      });
-
-      if (!emailResponse.ok) {
-        const error = await emailResponse.json();
-        throw new Error(error.message || "Failed to send email");
       }
 
       navigate("/check-email");

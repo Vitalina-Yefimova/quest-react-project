@@ -1,16 +1,25 @@
+import { useState } from "react";
 import VerifyContent from "../generics/verify/VerifyContent";
-import { useNavigate } from "react-router-dom";
+import AuthPopup from "./AuthPopup";
 
 export default function VerifyPage() {
-  const navigate = useNavigate();
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center">
       <VerifyContent
         endpoint="http://localhost:3000/auth/verify"
-        onSuccess={() => setTimeout(() => navigate("/profile"), 3000)}
-        onClose={() => navigate("/profile")}
+        onSuccess={() => setTimeout(() => setShowLoginPopup(true), 3000)}
+        onClose={() => setShowLoginPopup(true)}
       />
+
+      {showLoginPopup && (
+        <AuthPopup
+          initialAuthType="login"
+          initialMethod="email"
+          onClose={() => setShowLoginPopup(false)}
+        />
+      )}
     </div>
   );
 }

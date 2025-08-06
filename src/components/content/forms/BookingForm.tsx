@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -42,6 +42,7 @@ export default function BookingForm({
   const quest = useQuestStore((state) => state.getQuestById(questId || ""));
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const minPlayers = quest?.players?.min ?? 1;
   const maxPlayers = quest?.players?.max ?? 8;
@@ -81,6 +82,7 @@ export default function BookingForm({
       setTimeout(() => {
         onSubmitSuccess();
         reset();
+        navigate("/profile?selectedTab=orders");
       }, 1000);
     } catch (err: unknown) {
       if (err instanceof Error) setError(err.message);

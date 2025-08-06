@@ -1,7 +1,7 @@
 import { useUserStore } from "../store/userStore";
 
 export async function handleTokenLogin(access_token?: string) {
-  const setUser = useUserStore.getState().setUser;
+  const { setUser, logout } = useUserStore.getState();
 
   if (!access_token) {
     const match = document.cookie
@@ -9,6 +9,7 @@ export async function handleTokenLogin(access_token?: string) {
       .find((row) => row.startsWith("token="));
     access_token = match ? match.split("=")[1] : undefined;
     if (!access_token) {
+      logout();
       throw new Error("Token not found in cookies");
     }
   }
@@ -24,8 +25,14 @@ export async function handleTokenLogin(access_token?: string) {
   const res = await fetch(`http://localhost:3000/users/${userId}`, {
     headers: {
       Authorization: `Bearer ${access_token}`,
+      credentials: "include",
     },
   });
+
+  if (res.status === 401) {
+    logout();
+    throw new Error("Unauthorized");
+  }
 
   if (!res.ok) {
     throw new Error("Failed to fetch user data");

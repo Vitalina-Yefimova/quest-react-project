@@ -1,3 +1,5 @@
+import { useUserStore } from "../../../store/userStore";
+
 interface ProfileTabsProps {
   selectedTab: string;
   setSelectedTab: (
@@ -9,13 +11,19 @@ export default function ProfileTabs({
   selectedTab,
   setSelectedTab,
 }: ProfileTabsProps) {
-  const tabs = [
+  const user = useUserStore((state) => state.user);
+  const tabs: {
+    key: "info" | "edit" | "password" | "orders" | "favorites";
+    label: string;
+  }[] = [
     { key: "info", label: "Info" },
     { key: "edit", label: "Edit Info" },
-    { key: "password", label: "Change Password" },
+    ...(user?.hasPassword
+      ? [{ key: "password" as const, label: "Change Password" }]
+      : []),
     { key: "orders", label: "My Orders" },
     { key: "favorites", label: "My Favorites" },
-  ] as const;
+  ];
 
   return (
     <div className="flex space-x-4 pb-10">

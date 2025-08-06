@@ -16,6 +16,7 @@ interface Field {
   min?: number;
   max?: number;
   render?: (props: { field: UseFormRegisterReturn }) => JSX.Element;
+  disabled?: boolean;
 }
 
 interface BaseFormProps<T extends FieldValues> {
@@ -27,6 +28,7 @@ interface BaseFormProps<T extends FieldValues> {
   isSuccess?: boolean;
   successMessage?: string;
   resetOnSuccess?: boolean;
+  formMethods?: ReturnType<typeof useForm<T>>;
 }
 
 export default function BaseForm<T extends FieldValues>({
@@ -101,6 +103,7 @@ export default function BaseForm<T extends FieldValues>({
           onVerifyClick,
           isVerifying,
           render,
+          disabled,
         }) => {
           const value = watch(name as import("react-hook-form").Path<T>);
           const isFilled = value?.toString().length > 0;
@@ -109,7 +112,16 @@ export default function BaseForm<T extends FieldValues>({
           );
 
           return (
-            <div key={name} className="relative w-full h-[40px]">
+            <div
+              key={name}
+              className="relative w-full h-[40px]"
+              onClick={(e) => {
+                if (disabled) {
+                  e.preventDefault();
+                  alert("You can't change verified email");
+                }
+              }}
+            >
               {render ? (
                 render({ field: fieldProps })
               ) : (
@@ -120,7 +132,12 @@ export default function BaseForm<T extends FieldValues>({
                   defaultValue={defaultValue}
                   min={min}
                   max={max}
-                  className="peer w-full h-full px-4 py-3 border border-white rounded-[3px] bg-transparent text-[#E5E5E5] text-base placeholder-transparent"
+                  disabled={disabled}
+                  className={`peer w-full h-full px-4 py-3 border ${
+                    disabled
+                      ? "border-green-400 text-gray-400 bg-[#1E1E1E]"
+                      : "border-white"
+                  } rounded-[3px] text-[#E5E5E5] text-base placeholder-transparent`}
                 />
               )}
               <label
@@ -135,6 +152,12 @@ export default function BaseForm<T extends FieldValues>({
               >
                 {label}
               </label>
+
+              {disabled && (
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-green-400 text-xs">
+                  Verified
+                </span>
+              )}
 
               {type === "password" && (
                 <button
@@ -153,14 +176,16 @@ export default function BaseForm<T extends FieldValues>({
               )}
 
               {showVerifyButton && (
-                <button
-                  type="button"
-                  onClick={onVerifyClick}
-                  className="absolute -bottom-6 right-0 text-sm text-[#F28A0F] underline"
-                  disabled={isVerifying}
-                >
-                  {isVerifying ? "Sending..." : "Verify email"}
-                </button>
+                <div className="absolute bottom-1 -right-29">
+                  <Button
+                    type="button"
+                    onClick={onVerifyClick}
+                    className="text-xs font-semibold text-white px-4 py-2 bg-orange-500 rounded-full transition-colors cursor-none"
+                    disabled={isVerifying}
+                  >
+                    {isVerifying ? "Sending..." : "Verify email"}
+                  </Button>
+                </div>
               )}
             </div>
           );

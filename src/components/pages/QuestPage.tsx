@@ -66,6 +66,12 @@ export default function QuestPage() {
               {quest?.difficulty}
             </p>
           </div>
+          <DividerVector className="bg-white/36 w-[1px] h-[20px]"></DividerVector>
+          <div className="flex gap-2">
+            <p className="text-[#E5E5E5] text-sm not-italic font-normal leading-[144%] font-variant-numeric">
+              Price: ${quest?.price ?? "?"}
+            </p>
+          </div>
         </div>
         <p className="text-[#E5E5E5] text-[15px] not-italic font-medium leading-[150%] font-variant-numeric pl-[30px] pb-10">
           {quest?.description}
@@ -73,15 +79,15 @@ export default function QuestPage() {
 
         {user ? (
           <Button
-            className="flex items-center justify-center w-[200px] h-[60px] bg-[#F28A0F] text-white text-[17px] font-extrabold not-italic leading-normal tracking-[0.51px] rounded-full ml-[30px] cursor-none"
+            className="flex items-center justify-center w-[200px] h-[60px] bg-[#F28A0F] text-white text-[17px] font-semibold not-italic leading-normal tracking-[0.51px] rounded-full ml-[30px] cursor-none"
             onClick={() => setIsModalOpen(true)}
           >
             Book Now
           </Button>
         ) : (
-          <p className="text-gray-300 text-sm pl-[30px]">
+          <Button className="flex items-center justify-center w-[210px] h-[60px] bg-[#F28A0F] text-white text-[14px] font-extrabold not-italic leading-normal tracking-[0.51px] rounded-full ml-[30px] cursor-none">
             Log in to book this quest
-          </p>
+          </Button>
         )}
         <Footer />
       </div>

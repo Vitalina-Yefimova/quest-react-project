@@ -1,4 +1,4 @@
-import { Route, Routes, useSearchParams } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import HomePage from "./components/pages/HomePage";
 import ContactsPage from "./components/pages/ContactsPage";
 import QuestPage from "./components/pages/QuestPage";
@@ -10,12 +10,11 @@ import CheckEmail from "./components/pages/CheckEmail";
 import ProfilePage from "./components/pages/ProfilePage";
 import { handleTokenLogin } from "./utils/handleTokenLogin";
 import ResetPasswordPopup from "./components/content/popups/reset-password/ResetPasswordPopup";
+import VerifyNewEmailPage from "./components/pages/VerifyNewEmailPage";
 
 export default function InnerApp() {
   const setQuests = useQuestStore((state) => state.setQuests);
   const quests = useQuestStore((state) => state.quests);
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get("token");
 
   useEffect(() => {
     if (quests.length === 0) {
@@ -48,9 +47,8 @@ export default function InnerApp() {
         <Route path="/verify" element={<VerifyPage />} />
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/profile" element={<ProfilePage />} />
-        {token && (
-          <Route path="/reset-password" element={<ResetPasswordPopup />} />
-        )}
+        <Route path="/reset-password" element={<ResetPasswordPopup />} />
+        <Route path="/verify-new-email" element={<VerifyNewEmailPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>

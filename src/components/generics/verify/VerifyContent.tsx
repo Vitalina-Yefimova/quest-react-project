@@ -5,6 +5,7 @@ interface VerifyContentProps {
   onSuccess: () => void;
   onClose: () => void;
 }
+
 export default function VerifyContent({
   endpoint = "/auth/verify",
   onSuccess,
@@ -16,19 +17,18 @@ export default function VerifyContent({
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const access_token = params.get("access_token");
-
-    if (!access_token) {
+    const token = params.get("token");
+    if (!token) {
       setStatus("error");
       return;
     }
 
-    fetch(`http://localhost:3000${endpoint}`, {
+    fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${access_token}`,
       },
+      body: JSON.stringify({ token }),
     })
       .then(async (response) => {
         if (!response.ok) {

@@ -62,6 +62,7 @@ export default function FavoritesToggle({
     <CustomCursorWrapper>
       <button
         onClick={(e) => {
+          e.preventDefault();
           e.stopPropagation();
           toggleFavorite();
         }}

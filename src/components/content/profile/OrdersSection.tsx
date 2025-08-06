@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { getOrders, updateOrder, deleteOrder } from "../../../utils/ordersApi";
+import { Link } from "react-router-dom";
 
 interface Order {
   id: number;
+  questId: string;
   questTitle: string;
   date: string;
   participants: number;
@@ -114,15 +116,17 @@ export default function OrdersSection() {
     return <div className="text-gray-300">You don’t have any orders yet.</div>;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-white">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-white justify-items-center">
       {orders.map((order) => (
         <div
           key={order.id}
-          className="bg-[#2B2B2B] p-4 rounded-lg shadow-md border border-gray-700"
+          className="w-[340px] min-h-[300px] bg-[#2B2B2B] p-4 rounded-lg shadow-md border border-gray-700 mx-auto transition-all duration-300"
         >
           {editOrderId === order.id ? (
             <div className="space-y-2">
-              <p className="text-lg font-semibold">{order.questTitle}</p>
+              <p className="text-lg font-semibold text-center">
+                {order.questTitle}
+              </p>
               <label className="text-sm block">Date</label>
               <input
                 type="date"
@@ -141,17 +145,19 @@ export default function OrdersSection() {
                 }
                 className="bg-gray-800 text-white p-2 rounded w-full"
               />
-              {editError && <p className="text-red-500 text-sm">{editError}</p>}
-              <div className="flex gap-2 mt-2">
+              <p className="text-red-500 text-sm min-h-[20px]">
+                {editError || "\u00A0"}
+              </p>
+              <div className="flex gap-2 pt-18 justify-between">
                 <button
                   onClick={() => handleSaveEdit(order.id)}
-                  className="px-3 py-1 bg-green-500 rounded text-sm"
+                  className="px-9 py-1 bg-green-500 rounded text-sm"
                 >
                   Save
                 </button>
                 <button
                   onClick={handleCancelEdit}
-                  className="px-3 py-1 bg-gray-500 rounded text-sm"
+                  className="px-6 py-1 bg-gray-500 rounded text-sm"
                 >
                   Cancel
                 </button>
@@ -159,26 +165,33 @@ export default function OrdersSection() {
             </div>
           ) : (
             <>
-              <p className="text-lg font-semibold">{order.questTitle}</p>
-              <p>Date: {new Date(order.date).toLocaleDateString()}</p>
+              <Link
+                to={`/detailed-quest/${order.questId}`}
+                className="text-lg font-semibold text-orange-400 hover:underline text-center block"
+              >
+                {order.questTitle}
+              </Link>
+              <p className="pt-5">
+                Date: {new Date(order.date).toLocaleDateString()}
+              </p>
               <p>Participants: {order.participants}</p>
               <p>Price: ${order.price}</p>
-              <p className="text-xs text-gray-400">
+              <p className="text-xs text-gray-400 pt-6">
                 Created at: {new Date(order.createdAt).toLocaleString()}
               </p>
               {deleteError && (
                 <p className="text-red-500 text-sm mt-1">{deleteError}</p>
               )}
-              <div className="flex gap-2 mt-2">
+              <div className="flex gap-2 pt-32 justify-between">
                 <button
                   onClick={() => handleEdit(order)}
-                  className="px-3 py-1 bg-orange-500 rounded text-sm"
+                  className="px-9 py-1 bg-orange-500 rounded text-sm"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(order.id, order.date)}
-                  className="px-3 py-1 bg-red-600 rounded text-sm"
+                  className="px-6 py-1 bg-red-600 rounded text-sm"
                 >
                   Cancel
                 </button>

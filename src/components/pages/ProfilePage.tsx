@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 import ProfileEditSection from "../content/profile/ProfileEditSection";
 import ChangePasswordSection from "../content/profile/ChangePasswordSection";
@@ -9,9 +10,23 @@ import ProfileTabs from "../content/profile/ProfileTabs";
 
 export default function ProfilePage() {
   const { user } = useUserStore();
+  const [searchParams] = useSearchParams();
+
   const [selectedTab, setSelectedTab] = useState<
     "info" | "edit" | "password" | "orders" | "favorites"
   >("info");
+
+  useEffect(() => {
+    const tabFromUrl = searchParams.get("selectedTab");
+    if (
+      tabFromUrl === "edit" ||
+      tabFromUrl === "password" ||
+      tabFromUrl === "orders" ||
+      tabFromUrl === "favorites"
+    ) {
+      setSelectedTab(tabFromUrl);
+    }
+  }, [searchParams]);
 
   if (!user) return null;
 
@@ -34,7 +49,7 @@ export default function ProfilePage() {
           setSelectedTab={setSelectedTab}
         />
 
-        <div className="flex flex-col items-center font-sans pl-21">
+        <div className="flex flex-col items-center font-sans pl-20">
           {selectedTab === "info" && (
             <div className="space-y-4 text-[#E5E5E5]">
               <p>
@@ -52,7 +67,9 @@ export default function ProfilePage() {
             </div>
           )}
           {selectedTab === "edit" && <ProfileEditSection />}
-          {selectedTab === "password" && <ChangePasswordSection />}
+          {selectedTab === "password" && user?.hasPassword && (
+            <ChangePasswordSection />
+          )}
           {selectedTab === "orders" && <OrdersSection />}
           {selectedTab === "favorites" && <FavoritesSection />}
         </div>

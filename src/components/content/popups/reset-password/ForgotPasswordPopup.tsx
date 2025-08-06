@@ -15,15 +15,17 @@ export default function ForgotPasswordPopup({
   const [isSuccess, setSuccess] = useState(false);
 
   const handleSubmit = async (data: z.infer<typeof schema>) => {
-    const res = await fetch("http://localhost:3000/email/send", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: data.email,
-        frontendUrl: `${window.location.origin}/reset-password`,
-        type: "reset",
-      }),
-    });
+    const res = await fetch(
+      "http://localhost:3000/auth/send-reset-password-email",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: data.email,
+          frontendUrl: `${window.location.origin}/reset-password`,
+        }),
+      }
+    );
 
     if (!res.ok) {
       const error = await res.json();

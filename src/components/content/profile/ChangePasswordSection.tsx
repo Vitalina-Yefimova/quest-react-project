@@ -1,7 +1,6 @@
 import { useState } from "react";
 import BaseForm from "../../generics/forms/BaseForm";
 import { z } from "zod";
-import axios from "axios";
 import { useUserStore } from "../../../store/userStore";
 import { getTokenFromCookie } from "../../../utils/getTokenFromCookie";
 
@@ -26,38 +25,27 @@ export default function ChangePasswordSection() {
     if (!token) throw new Error("No token provided");
 
     try {
-      await axios.patch(
-        `http://localhost:3000/users/${user.id}`,
-        {
+      const res = await fetch(`http://localhost:3000/users/${user.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
           password: data.newPassword,
           oldPassword: data.oldPassword,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+        }),
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.message || "Failed to change password");
+      }
+
       setSuccess(true);
     } catch (err: unknown) {
-      interface AxiosErrorResponse {
-        response?: {
-          data?: {
-            message?: string;
-          };
-        };
-      }
-      const error = err as AxiosErrorResponse;
-      if (
-        typeof err === "object" &&
-        err !== null &&
-        error.response &&
-        typeof error.response === "object" &&
-        error.response.data &&
-        typeof error.response.data === "object" &&
-        error.response.data.message
-      ) {
-        throw new Error(error.response.data.message);
+      if (err instanceof Error) {
+        throw err;
       }
       throw new Error("Failed to change password");
     }
