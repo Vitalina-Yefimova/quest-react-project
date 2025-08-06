@@ -43,42 +43,6 @@ export default function ProfileEditSection() {
     user?.emailVerified === false &&
     (!user?.email || user?.email !== user?.newEmail);
 
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const token = urlParams.get("token");
-
-  //   if (!token) return;
-
-  //   const verifyEmail = async () => {
-  //     try {
-  //       const res = await fetch("http://localhost:3000/auth/verify-new-email", {
-  //         method: "POST",
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-
-  //       if (!res.ok) {
-  //         throw new Error("Verification failed");
-  //       }
-
-  //       const updatedUser: User = await res.json();
-  //       setUser(updatedUser);
-  //       methods.reset({
-  //         firstName: updatedUser.firstName || "",
-  //         lastName: updatedUser.lastName || "",
-  //         phone: updatedUser.phone || "",
-  //         email: updatedUser.newEmail || updatedUser.email || "",
-  //       });
-  //       setEmailVerifiedNow(true);
-  //     } catch (error) {
-  //       console.error("Verification error:", error);
-  //     }
-  //   };
-
-  //   verifyEmail();
-  // }, []);
-
   const handleSubmit = async (data: z.infer<typeof schema>) => {
     if (!user || !user.id) throw new Error("User is not loaded");
     const token = getTokenFromCookie();
